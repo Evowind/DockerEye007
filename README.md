@@ -4,7 +4,7 @@ Une plateforme moderne de gestion et d'analyse de speedruns pour GoldenEye 007 e
 
 ## À propos du projet
 
-GoldenTime est une application cloud-native qui permet aux speedrunners de soumettre, vérifier et analyser leurs performances, Inspiré par TheElite.
+DockerEye_007 est une application cloud-native qui permet aux speedrunners de soumettre, vérifier et analyser leurs performances, Inspiré par TheElite.
 
 ## Technologies
 
