@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Standings</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .board-switcher { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; }
+      .board-switcher button {
+        padding: 8px 12px; border: 1px solid var(--elite-line-strong); background: #111315; color: var(--elite-text);
+        font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+      }
+      .board-switcher button.active { border-color: rgba(215, 173, 87, 0.7); background: #2d2516; color: var(--elite-gold-strong); }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">Standings</h1>
+              <div class="portal-subtitle">Point totals, average rank, and technical route leaders across both boards</div>
+            </div>
+          </div>
+          <div class="login-panel">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab" href="/records.html">Apex Run</a></div>
+        <div class="tab-wrap"><a class="tab active" href="/leaders.html">Nightfall</a></div>
+        <div class="tab-wrap"><a class="tab" href="/levels.html">Stages</a></div>
+        <div class="tab-wrap"><a class="tab" href="/player.html">Players</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Leaderboards</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/leaders.html"><span class="icon">★</span> Point Rank</a></li>
+            <li><a class="tree-button" href="/records.html"><span class="icon">▣</span> Apex Run</a></li>
+            <li><a class="tree-button" href="/levels.html"><span class="icon">⚑</span> Stage Index</a></li>
+            <li><a class="tree-button" href="/player.html"><span class="icon">✦</span> Player Profiles</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title" id="leaderboard-title">Nightfall leaders</h2></div>
+            <div class="panel-body">
+              <div class="board-switcher" id="board-switcher">
+                <button type="button" data-board="Apex Run">Apex Run</button>
+                <button type="button" class="active" data-board="Nightfall">Nightfall</button>
+              </div>
+              <p class="intro" id="leaderboard-intro">This board rewards consistency across the more technical and longer routes. The top players keep strong mid-stage control and late-route tempo.</p>
+
+              <div class="stats-grid">
+                <div class="stat-box"><span class="stat-label">Top player</span><span class="stat-value player-gold" id="leader-top">Alex</span></div>
+                <div class="stat-box"><span class="stat-label">Total points</span><span class="stat-value" id="leader-points">4,310</span></div>
+                <div class="stat-box"><span class="stat-label">Active routes</span><span class="stat-value" id="leader-routes">20</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title">Current rankings</h2></div>
+            <div class="panel-body leaderboard-wrap">
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Player</th><th>Points</th><th>Average Rank</th><th>Entries</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td class="player-name player-gold"><a class="player-link player-gold" href="/player.html?player=Alex">🇫🇷 Alex</a></td><td class="points">4,310</td><td class="player-green">#2.4</td><td>42</td></tr>
+                  <tr><td>2</td><td class="player-name player-cyan"><a class="player-link player-cyan" href="/player.html?player=Kenji">🇯🇵 Kenji</a></td><td class="points">4,080</td><td class="player-green">#2.8</td><td>41</td></tr>
+                  <tr><td>3</td><td class="player-name player-magenta"><a class="player-link player-magenta" href="/player.html?player=Mina">🇰🇷 Mina</a></td><td class="points">3,920</td><td class="player-green">#3.5</td><td>39</td></tr>
+                  <tr><td>4</td><td class="player-name player-red"><a class="player-link player-red" href="/player.html?player=Rune">🇩🇪 Rune</a></td><td class="points">3,760</td><td class="player-green">#4.1</td><td>36</td></tr>
+                  <tr><td>5</td><td class="player-name player-green"><a class="player-link player-green" href="/player.html?player=Nyx">🇺🇸 Nyx</a></td><td class="points">3,540</td><td class="player-green">#5.2</td><td>33</td></tr>
+                  <tr><td>6</td><td class="player-name"><a class="player-link" href="/player.html?player=Jules">🇧🇪 Jules</a></td><td class="points">3,220</td><td class="player-green">#7.3</td><td>30</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script>
+      const boardStats = {
+        'Apex Run': { title: 'Apex Run leaders', intro: 'This board rewards pure pace and low-latency decision making across the shorter, sharper route pool.', top: 'Alex', points: '4,310', routes: '20' },
+        'Nightfall': { title: 'Nightfall leaders', intro: 'This board rewards consistency across the more technical and longer routes. The top players keep strong mid-stage control and late-route tempo.', top: 'Alex', points: '4,310', routes: '20' }
+      };
+      const buttons = document.querySelectorAll('#board-switcher button');
+      const title = document.getElementById('leaderboard-title');
+      const intro = document.getElementById('leaderboard-intro');
+      const top = document.getElementById('leader-top');
+      const points = document.getElementById('leader-points');
+      const routes = document.getElementById('leader-routes');
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
+          const board = button.dataset.board;
+          const stats = boardStats[board];
+          title.textContent = stats.title;
+          intro.textContent = stats.intro;
+          top.textContent = stats.top;
+          points.textContent = stats.points;
+          routes.textContent = stats.routes;
+        });
+      });
+    </script>
+  </body>
+</html>

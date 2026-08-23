@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DockerEye007 Services</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #f8fafc;
+      }
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      h1 {
+        margin-bottom: 24px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 20px;
+      }
+      .status {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: bold;
+        background: #14532d;
+        color: #dcfce7;
+      }
+      .status.offline {
+        background: #7f1d1d;
+        color: #fee2e2;
+      }
+      a {
+        color: #93c5fd;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>DockerEye007 microservices</h1>
+      <div class="grid" id="services"></div>
+    </div>
+
+    <script>
+      const services = [
+        { name: 'Auth Service', url: 'http://localhost:8081/api/auth/health', expect: 'UP' },
+        { name: 'Run Service', url: 'http://localhost:8082/api/runs/health', expect: 'UP' },
+        { name: 'Stats Service', url: 'http://localhost:8083/api/stats/health', expect: 'UP' },
+        { name: 'API Gateway', url: 'http://localhost:8080/actuator/health', expect: 'UP' }
+      ];
+
+      const container = document.getElementById('services');
+
+      async function checkService(service) {
+        try {
+          const response = await fetch(service.url);
+          const data = await response.json();
+          const isUp = (data.status || data.service) === service.expect || data.status === 'UP';
+          return `
+            <div class="card">
+              <h3>${service.name}</h3>
+              <p><span class="status ${isUp ? '' : 'offline'}">${isUp ? 'SUCCESS' : 'OFFLINE'}</span></p>
+              <p><a href="${service.url}" target="_blank">${service.url}</a></p>
+            </div>
+          `;
+        } catch (error) {
+          return `
+            <div class="card">
+              <h3>${service.name}</h3>
+              <p><span class="status offline">OFFLINE</span></p>
+              <p><a href="${service.url}" target="_blank">${service.url}</a></p>
+            </div>
+          `;
+        }
+      }
+
+      (async () => {
+        const cards = await Promise.all(services.map(checkService));
+        container.innerHTML = cards.join('');
+      })();
+    </script>
+  </body>
+</html>

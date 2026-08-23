@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Player Profile</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .player-picker-wrap {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .player-picker-wrap label {
+        color: var(--elite-muted);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .player-picker {
+        min-width: 220px;
+        padding: 9px 10px;
+        border: 1px solid var(--elite-line);
+        background: #0d0f10;
+        color: var(--elite-text);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">Player Profiles</h1>
+              <div class="portal-subtitle">Run history, stage records, and category totals</div>
+            </div>
+          </div>
+          <div class="login-panel">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab" href="/records.html">Apex Run</a></div>
+        <div class="tab-wrap"><a class="tab" href="/leaders.html">Nightfall</a></div>
+        <div class="tab-wrap"><a class="tab" href="/levels.html">Stages</a></div>
+        <div class="tab-wrap"><a class="tab active" href="/player.html">Players</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Player Hub</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/player.html"><span class="icon">★</span> Overview</a></li>
+            <li><a class="tree-button" href="/index.html"><span class="icon">▣</span> Leaderboard</a></li>
+            <li><a class="tree-button" href="/records.html"><span class="icon">⚑</span> Stage Records</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title" id="player-header">Loading player...</h2>
+            </div>
+            <div class="panel-body">
+              <div class="player-picker-wrap">
+                <label for="player-picker">Player</label>
+                <select id="player-picker" class="player-picker" aria-label="Select player"></select>
+              </div>
+              <div class="stats-grid" style="margin-top: 16px;">
+                <div class="stat-box"><span class="stat-label">Runs</span><span class="stat-value" id="player-runs">0</span></div>
+                <div class="stat-box"><span class="stat-label">Best time</span><span class="stat-value" id="player-best">00:00.000</span></div>
+                <div class="stat-box"><span class="stat-label">Best score</span><span class="stat-value" id="player-score">0</span></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Recent results</h2>
+            </div>
+            <div class="panel-body leaderboard-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Game</th>
+                    <th>Category</th>
+                    <th>Time</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody id="player-runs-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function formatDuration(durationMs) {
+        const totalMs = Number(durationMs || 0);
+        const minutes = Math.floor(totalMs / 60000);
+        const seconds = Math.floor((totalMs % 60000) / 1000);
+        const milliseconds = totalMs % 1000;
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+      }
+
+      function difficultyForCategory(category) {
+        const numeric = Number(category || 0);
+        if (numeric < 2) return 'Sprint';
+        if (numeric < 5) return 'Standard';
+        return 'Endurance';
+      }
+
+      function playerFlag(playerName) {
+        const flags = {
+          Alex: '🇫🇷', Kenji: '🇯🇵', Nyx: '🇺🇸', Rune: '🇩🇪', Mina: '🇰🇷', Jules: '🇧🇪',
+          Riven: '🇨🇦', Milo: '🇦🇺', Casey: '🇺🇸', Hexa: '🇳🇴', Nova: '🇧🇷', Taro: '🇯🇵'
+        };
+        return flags[playerName] || '🏁';
+      }
+
+      async function loadPlayerPage() {
+        const params = new URLSearchParams(window.location.search);
+        const requestedPlayer = params.get('player');
+
+        try {
+          const response = await fetch('http://localhost:8083/api/stats/leaderboard');
+          const data = await response.json();
+          const players = [...new Set(data.map((entry) => entry.playerName))];
+          const selected = players.includes(requestedPlayer)
+            ? requestedPlayer
+            : players[0];
+
+          const playerRuns = data.filter((entry) => entry.playerName === selected);
+          const bestTime = playerRuns.length ? Math.min(...playerRuns.map((entry) => Number(entry.timeMs))) : 0;
+          const bestScore = playerRuns.length ? Math.max(...playerRuns.map((entry) => Number(entry.points))) : 0;
+          const palette = ['player-green', 'player-red', 'player-cyan', 'player-gold', 'player-magenta'];
+          const header = document.getElementById('player-header');
+          const playerClass = palette[players.indexOf(selected) % palette.length];
+
+          header.textContent = `${playerFlag(selected)} ${selected}`;
+          header.className = 'panel-title ' + playerClass;
+          document.getElementById('player-runs').textContent = String(playerRuns.length);
+          document.getElementById('player-best').textContent = bestTime ? formatDuration(bestTime) : '00:00.000';
+          document.getElementById('player-score').textContent = String(bestScore);
+
+          const selector = document.getElementById('player-picker');
+          selector.innerHTML = players
+            .map((player) => `<option value="${player}" ${player === selected ? 'selected' : ''}>${playerFlag(player)} ${player}</option>`)
+            .join('');
+          selector.onchange = () => {
+            const url = new URL(window.location.href);
+            url.searchParams.set('player', selector.value);
+            window.location.href = url.toString();
+          };
+
+          const runsBody = document.getElementById('player-runs-body');
+          const rows = playerRuns.slice(0, 12).map((entry) => `
+            <tr>
+              <td>${entry.game}</td>
+              <td><span class="tag">${difficultyForCategory(entry.category)}</span></td>
+              <td>${formatDuration(entry.timeMs)}</td>
+              <td class="points">${entry.points}</td>
+            </tr>
+          `).join('');
+
+          runsBody.innerHTML = rows || '<tr><td colspan="4">No runs found for this player.</td></tr>';
+        } catch (error) {
+          document.getElementById('player-header').textContent = 'Player data unavailable';
+          document.getElementById('player-runs-body').innerHTML = '<tr><td colspan="4">Unable to load player data.</td></tr>';
+        }
+      }
+
+      loadPlayerPage();
+    </script>
+  </body>
+</html>

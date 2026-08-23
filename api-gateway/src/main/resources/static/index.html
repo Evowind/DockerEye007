@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DockerEye007 | The-Elite Rankings</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .leaderboard-wrap { max-height: 620px; overflow: auto; }
+      .leaderboard-wrap table { table-layout: fixed; }
+      .stats-grid { display: grid; grid-template-columns: repeat(3, minmax(110px, 1fr)); gap: 12px; }
+      .rule {
+        margin: 10px 0 0;
+        padding-top: 10px;
+        border-top: 1px solid var(--elite-line);
+        color: var(--elite-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+      .player-link { color: inherit; font-weight: 800; text-decoration: none; }
+      .player-link:hover { text-decoration: underline; }
+      .mini-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+      .mini-list li { padding: 10px 12px; background: #0d0f10; border: 1px solid var(--elite-line); }
+      .mini-key { color: var(--elite-gold-strong); font-weight: 800; }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">The Elite Rankings</h1>
+              <div class="portal-subtitle">A fictional rankings board for staged runs and layered route competitions</div>
+            </div>
+          </div>
+
+          <div class="login-panel" aria-label="Login form">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab active" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab" href="/records.html">Apex Run <span class="caret"></span></a>
+          <div class="dropdown"><a href="/records.html">Records</a><a href="/levels.html">Stages</a><a href="/player.html">Players</a></div>
+        </div>
+        <div class="tab-wrap"><a class="tab" href="/leaders.html">Nightfall <span class="caret"></span></a>
+          <div class="dropdown"><a href="/leaders.html">Standings</a><a href="/levels.html">Routes</a><a href="/player.html">Players</a></div>
+        </div>
+        <div class="tab-wrap"><a class="tab" href="/levels.html">Stage Index</a></div>
+        <div class="tab-wrap"><a class="tab" href="/register.html">Members</a></div>
+        <div class="tab-wrap"><a class="tab" href="/submit.html">Submit Run</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Navigation</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/index.html"><span class="icon">★</span> Leaderboards</a></li>
+            <li><a class="tree-button" href="/records.html"><span class="icon">🏆</span> Apex Run</a></li>
+            <li><a class="tree-button" href="/leaders.html"><span class="icon">▣</span> Nightfall</a></li>
+            <li><a class="tree-button" href="/levels.html"><span class="icon">⚑</span> Stage Index</a></li>
+            <li><a class="tree-button" href="/player.html"><span class="icon">✦</span> Players</a></li>
+          </ul>
+
+          <div class="side-heading">Quick Links</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/stage.html?game=Apex%20Run&stage=Harbor%20Run"><span class="icon">◈</span> Harbor Run</a></li>
+            <li><a class="tree-button" href="/stage.html?game=Nightfall&stage=Glass%20Gate"><span class="icon">▤</span> Glass Gate</a></li>
+            <li><a class="tree-button" href="/submit.html"><span class="icon">⟡</span> Submit</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Current Board</h2>
+            </div>
+            <div class="panel-body hero-grid">
+              <div>
+                <div class="stats-grid">
+                  <div class="stat-box"><span class="stat-label">Board leader</span><span class="stat-value player-gold">Alex</span></div>
+                  <div class="stat-box"><span class="stat-label">Fastest stage</span><span class="stat-value">00:52.480</span></div>
+                  <div class="stat-box"><span class="stat-label">Active stages</span><span class="stat-value">40</span></div>
+                </div>
+              </div>
+
+              <div class="note-box">
+                <div class="panel-title" style="font-size:0.82rem; margin-bottom:8px;">Featured Route</div>
+                <div class="rule">
+                  Current spotlight: <span class="mini-key">Harbor Run</span> on <span class="mini-key">Apex Run</span><br />
+                  Short route, low variance, and a very tight top end.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header">
+              <h2 class="panel-title">Route Spotlight</h2>
+            </div>
+            <div class="panel-body">
+              <ul class="mini-list">
+                <li><span class="mini-key">Apex Run</span> — 20 stages, mostly short and bursty routes between 00:46 and 01:54.</li>
+                <li><span class="mini-key">Nightfall</span> — 20 stages, longer technical routes with a heavier mid-game pacing.</li>
+                <li><span class="mini-key">Stage Index</span> — all routes are browseable and linked to dedicated pages.</li>
+              </ul>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title">Stage Leaderboard</h2></div>
+            <div class="panel-body leaderboard-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 52px;">#</th>
+                    <th>Player</th>
+                    <th>Game</th>
+                    <th style="width: 90px;">Category</th>
+                    <th>Time</th>
+                    <th style="width: 90px;">Points</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function formatDuration(durationMs) {
+        const totalMs = Number(durationMs || 0);
+        const minutes = Math.floor(totalMs / 60000);
+        const seconds = Math.floor((totalMs % 60000) / 1000);
+        const milliseconds = totalMs % 1000;
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+      }
+
+      async function loadLeaderboard() {
+        try {
+          const response = await fetch('http://localhost:8083/api/stats/leaderboard');
+          const data = await response.json();
+          const tbody = document.getElementById('leaderboard-body');
+          const palette = ['player-green', 'player-red', 'player-cyan', 'player-gold', 'player-magenta'];
+          const visibleRows = data.slice(0, 100);
+          const fragment = document.createDocumentFragment();
+
+          visibleRows.forEach((entry, index) => {
+            const nameClass = palette[index % palette.length];
+            const row = document.createElement('tr');
+            const playerLink = `/player.html?player=${encodeURIComponent(entry.playerName)}`;
+            row.innerHTML = `
+              <td>${index + 1}</td>
+              <td class="player-name"><a class="player-link ${nameClass}" href="${playerLink}">${entry.playerName}</a></td>
+              <td>${entry.game}</td>
+              <td><span class="tag">${entry.category}</span></td>
+              <td>${formatDuration(entry.timeMs)}</td>
+              <td class="points">${entry.points}</td>
+            `;
+            fragment.appendChild(row);
+          });
+
+          tbody.innerHTML = '';
+          tbody.appendChild(fragment);
+        } catch (error) {
+          document.getElementById('leaderboard-body').innerHTML = `
+            <tr><td colspan="6">Unable to load leaderboard. Check the stats service.</td></tr>
+          `;
+        }
+      }
+
+      loadLeaderboard();
+    </script>
+  </body>
+</html>

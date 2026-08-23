@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DockerEye007</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #111827;
+        color: #f9fafb;
+      }
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 48px 20px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+      .badge {
+        background: #f59e0b;
+        color: #111827;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-weight: bold;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #1f2937;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      th, td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #374151;
+        text-align: left;
+      }
+      th {
+        background: #111827;
+      }
+      .tag {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #1d4ed8;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>DockerEye007</h1>
+        <span class="badge">Rankings</span>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Game</th>
+            <th>Category</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+
+    <script>
+      async function loadLeaderboard() {
+        const response = await fetch('http://localhost:8083/api/stats/leaderboard');
+        const data = await response.json();
+        const tbody = document.getElementById('leaderboard-body');
+
+        tbody.innerHTML = data.map((entry, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${entry.playerName}</td>
+            <td>${entry.game}</td>
+            <td><span class="tag">${entry.category}</span></td>
+            <td>${entry.timeMs} ms</td>
+          </tr>
+        `).join('');
+      }
+
+      loadLeaderboard();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - DockerEye007</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div>
+          <span class="eyebrow">The-Elite</span>
+          <h1 class="portal-title">DockerEye007</h1>
+          <div class="portal-subtitle">Member registration / account access</div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <a class="tab" href="/index.html">Rankings Home</a>
+        <a class="tab" href="/records.html">Apex Run</a>
+        <a class="tab" href="/leaders.html">Nightfall</a>
+        <a class="tab active" href="/register.html">Members</a>
+        <a class="tab" href="/submit.html">Submit Run</a>
+      </nav>
+
+      <div class="form-area">
+        <div class="card">
+          <div class="card-header">Account Registration</div>
+          <div class="card-body">
+            <form id="register-form">
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="username">Username</label>
+                  <input id="username" name="username" required placeholder="player_name" />
+                </div>
+
+                <div class="field full">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" required placeholder="player@example.com" />
+                </div>
+
+                <div class="field full">
+                  <label for="country">Country</label>
+                  <input id="country" name="country" required placeholder="FR" />
+                </div>
+              </div>
+
+              <button class="primary-btn" type="submit">Register</button>
+            </form>
+
+            <div id="message" class="message" aria-live="polite"></div>
+
+            <div class="footer">
+              Already have an account? <a href="/index.html">Back to leaderboard</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const form = document.getElementById('register-form');
+      const message = document.getElementById('message');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        message.textContent = '';
+        message.classList.remove('error');
+
+        const payload = {
+          username: document.getElementById('username').value,
+          email: document.getElementById('email').value,
+          country: document.getElementById('country').value
+        };
+
+        try {
+          const response = await fetch('http://localhost:8081/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.text();
+
+          if (!response.ok) {
+            throw new Error(data || 'Registration failed');
+          }
+
+          const result = JSON.parse(data);
+          localStorage.setItem('dockerEyeToken', result.token || '');
+          localStorage.setItem('dockerEyeUser', JSON.stringify({
+            username: result.username,
+            email: result.email,
+            country: result.country
+          }));
+
+          message.textContent = 'Registration successful! Redirecting...';
+          setTimeout(() => {
+            window.location.href = '/index.html';
+          }, 800);
+        } catch (error) {
+          message.textContent = error.message || 'Unable to register this user.';
+          message.classList.add('error');
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stage Detail</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .stage-layout { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 18px; }
+      .stat-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+      .section-note { color: var(--elite-muted); line-height: 1.7; }
+      .stage-name { color: var(--elite-gold-strong); }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">Stage Detail</h1>
+              <div class="portal-subtitle">Dedicated route breakdown and leaderboard</div>
+            </div>
+          </div>
+          <div class="login-panel">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab" href="/records.html">Apex Run</a></div>
+        <div class="tab-wrap"><a class="tab" href="/leaders.html">Nightfall</a></div>
+        <div class="tab-wrap"><a class="tab" href="/levels.html">Stages</a></div>
+        <div class="tab-wrap"><a class="tab" href="/player.html">Players</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Stage Links</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/levels.html"><span class="icon">★</span> Stage Index</a></li>
+            <li><a class="tree-button" href="/records.html"><span class="icon">▣</span> Apex Run</a></li>
+            <li><a class="tree-button" href="/leaders.html"><span class="icon">⚑</span> Nightfall</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title stage-name" id="stage-title">Loading stage...</h2></div>
+            <div class="panel-body stage-layout">
+              <div>
+                <p class="section-note" id="stage-summary">Loading route information...</p>
+                <div class="stat-row" style="margin-top: 16px;">
+                  <div class="stat-box"><span class="stat-label">WR</span><span class="stat-value" id="stage-wr">00:00.000</span></div>
+                  <div class="stat-box"><span class="stat-label">Pointless</span><span class="stat-value" id="stage-pointless">00:00.000</span></div>
+                  <div class="stat-box"><span class="stat-label">Players</span><span class="stat-value" id="stage-players">0</span></div>
+                </div>
+              </div>
+              <div class="note-box">
+                <div class="panel-title" style="font-size:0.82rem; margin-bottom:8px;">Board Info</div>
+                <div class="rule" id="stage-board-info">Gathering board data...</div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title">Route leaderboard</h2></div>
+            <div class="panel-body leaderboard-wrap">
+              <table>
+                <thead>
+                  <tr><th>#</th><th>Player</th><th>Time</th><th>Category</th><th>Points</th></tr>
+                </thead>
+                <tbody id="stage-body"></tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      function formatDuration(durationMs) {
+        const totalMs = Number(durationMs || 0);
+        const minutes = Math.floor(totalMs / 60000);
+        const seconds = Math.floor((totalMs % 60000) / 1000);
+        const milliseconds = totalMs % 1000;
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`;
+      }
+
+      function difficultyForCategory(category) {
+        const numeric = Number(category || 0);
+        if (numeric < 2) return 'Sprint';
+        if (numeric < 5) return 'Standard';
+        return 'Endurance';
+      }
+
+      function playerFlag(playerName) {
+        const flags = {
+          Alex: '🇫🇷', Kenji: '🇯🇵', Nyx: '🇺🇸', Rune: '🇩🇪', Mina: '🇰🇷', Jules: '🇧🇪',
+          Riven: '🇨🇦', Milo: '🇦🇺', Casey: '🇺🇸', Hexa: '🇳🇴', Nova: '🇧🇷', Taro: '🇯🇵'
+        };
+        return flags[playerName] || '🏁';
+      }
+
+      function getStageMeta(game, stage) {
+        const map = {
+          'Apex Run': {
+            'Harbor Run': { summary: 'A compact route with fast exits and a very short recovery window.', wr: 52480, pointless: 78000, board: 'Apex Run / Short route' },
+            'Glass Gate': { summary: 'Fast movement and mid-route precision decide the final split.', wr: 66901, pointless: 85000, board: 'Apex Run / Precision track' },
+            'Mercury Lift': { summary: 'The route rewards rhythm and safe under-pressure corners.', wr: 87000, pointless: 115000, board: 'Apex Run / Balance route' },
+            'Drift Line': { summary: 'A clean drift line keeps this stage efficient and highly repeatable.', wr: 82600, pointless: 98000, board: 'Apex Run / Line control' }
+          },
+          'Nightfall': {
+            'Glass Gate': { summary: 'Longer and more technical than the short-form routes on Apex Run.', wr: 97480, pointless: 130000, board: 'Nightfall / Long route' },
+            'Stone Span': { summary: 'A heavier route where stable pacing matters over pure speed.', wr: 108000, pointless: 145000, board: 'Nightfall / Stability route' },
+            'Hush Port': { summary: 'This route rewards precise control over the final approach.', wr: 89200, pointless: 122000, board: 'Nightfall / Tight final section' }
+          }
+        };
+
+        return map[game]?.[stage] || { summary: 'Fictional route data for this stage is available in the board archive.', wr: 90000, pointless: 120000, board: 'General route data' };
+      }
+
+      async function loadStage() {
+        const params = new URLSearchParams(window.location.search);
+        const game = params.get('game') || 'Apex Run';
+        const stage = params.get('stage') || 'Harbor Run';
+
+        try {
+          const response = await fetch('http://localhost:8083/api/stats/leaderboard');
+          const data = await response.json();
+          const matches = data.filter((entry) => entry.game === game);
+          const stageMeta = getStageMeta(game, stage);
+          const timeValues = matches.map((entry) => Number(entry.timeMs));
+          const wr = timeValues.length ? Math.min(...timeValues) : stageMeta.wr;
+          const pointless = stageMeta.pointless;
+
+          document.getElementById('stage-title').textContent = `${stage} · ${game}`;
+          document.getElementById('stage-summary').textContent = stageMeta.summary;
+          document.getElementById('stage-wr').textContent = formatDuration(wr);
+          document.getElementById('stage-pointless').textContent = formatDuration(pointless);
+          document.getElementById('stage-players').textContent = String(new Set(matches.map((entry) => entry.playerName)).size || 12);
+          document.getElementById('stage-board-info').innerHTML = `<strong>${game}</strong><br />${stageMeta.board}`;
+
+          const tbody = document.getElementById('stage-body');
+          const stageRows = matches.slice(0, 8).map((entry, index) => `
+            <tr>
+              <td>${index + 1}</td>
+              <td><a class="player-link player-gold" href="/player.html?player=${encodeURIComponent(entry.playerName)}">${playerFlag(entry.playerName)} ${entry.playerName}</a></td>
+              <td>${formatDuration(entry.timeMs)}</td>
+              <td><span class="tag">${difficultyForCategory(entry.category)}</span></td>
+              <td class="points">${entry.points}</td>
+            </tr>
+          `).join('');
+
+          tbody.innerHTML = stageRows || '<tr><td colspan="5">No stage data available.</td></tr>';
+        } catch (error) {
+          document.getElementById('stage-title').textContent = `${stage} · ${game}`;
+          document.getElementById('stage-summary').textContent = 'Stage data could not be loaded right now.';
+          document.getElementById('stage-body').innerHTML = '<tr><td colspan="5">Unable to load route leaderboard.</td></tr>';
+        }
+      }
+
+      loadStage();
+    </script>
+  </body>
+</html>

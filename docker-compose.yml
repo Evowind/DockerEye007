@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: docker_eye
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - postgres
+
+  run-service:
+    build:
+      context: ./run-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - postgres
+
+  stats-service:
+    build:
+      context: ./stats-service
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - postgres
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+volumes:
+  pgdata:

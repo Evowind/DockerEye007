@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stage Index</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .stage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+      .stage-card {
+        display: block;
+        padding: 14px 12px;
+        background: #0d0f10;
+        border: 1px solid var(--elite-line);
+        color: var(--elite-text);
+        text-decoration: none;
+      }
+      .stage-card:hover { border-color: rgba(215, 173, 87, 0.6); }
+      .stage-card h3 { margin: 0 0 8px; font-size: 1.05rem; color: var(--elite-gold-strong); }
+      .stage-card .meta { color: var(--elite-muted); font-size: 0.82rem; }
+      .stage-card .range { display: block; margin-top: 8px; font-weight: 700; }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">Stage Index</h1>
+              <div class="portal-subtitle">Browse all fictional routes and the split range of each board</div>
+            </div>
+          </div>
+          <div class="login-panel">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab" href="/records.html">Apex Run</a></div>
+        <div class="tab-wrap"><a class="tab" href="/leaders.html">Nightfall</a></div>
+        <div class="tab-wrap"><a class="tab active" href="/levels.html">Stages</a></div>
+        <div class="tab-wrap"><a class="tab" href="/player.html">Players</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Featured Boards</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/records.html"><span class="icon">★</span> Apex Run</a></li>
+            <li><a class="tree-button" href="/leaders.html"><span class="icon">▣</span> Nightfall</a></li>
+            <li><a class="tree-button" href="/stage.html?game=Apex%20Run&stage=Harbor%20Run"><span class="icon">⚑</span> Harbor Run</a></li>
+            <li><a class="tree-button" href="/stage.html?game=Nightfall&stage=Glass%20Gate"><span class="icon">✦</span> Glass Gate</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title">Stage Browser</h2></div>
+            <div class="panel-body">
+              <div id="stage-grid" class="stage-grid"></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const stageGroups = {
+        'Apex Run': [
+          ['Harbor Run', '00:46 - 01:09'],
+          ['Glass Gate', '00:56 - 01:18'],
+          ['Mercury Lift', '01:05 - 01:31'],
+          ['Drift Line', '00:58 - 01:24'],
+          ['Red Signal', '01:12 - 01:46'],
+          ['Trench Pass', '00:49 - 01:10'],
+          ['Copper Wall', '00:54 - 01:20'],
+          ['Hollow Steps', '01:08 - 01:33'],
+          ['Cold Rail', '00:50 - 01:12'],
+          ['Ash Yard', '01:16 - 01:49'],
+          ['Solar Bend', '00:57 - 01:28'],
+          ['Marble Rise', '01:11 - 01:42'],
+          ['Rook Tower', '01:03 - 01:34'],
+          ['Harbor Echo', '00:48 - 01:11'],
+          ['Crash Gate', '01:20 - 01:55'],
+          ['Lower Set', '00:52 - 01:17'],
+          ['Signal House', '01:04 - 01:30'],
+          ['East Thread', '00:59 - 01:25'],
+          ['Northline', '01:01 - 01:32'],
+          ['Black Current', '00:47 - 01:10']
+        ],
+        'Nightfall': [
+          ['Glass Gate', '01:12 - 01:44'],
+          ['Stone Span', '01:18 - 01:54'],
+          ['Hush Port', '01:04 - 01:36'],
+          ['Sever Line', '01:22 - 01:58'],
+          ['Blue Vale', '01:07 - 01:39'],
+          ['Cinder Lane', '01:15 - 01:43'],
+          ['Falcon Gate', '01:31 - 02:09'],
+          ['Low Echo', '01:11 - 01:41'],
+          ['Warden Road', '01:19 - 01:53'],
+          ['Frost Bend', '01:05 - 01:34'],
+          ['Dune Crest', '01:28 - 02:05'],
+          ['Night Span', '01:09 - 01:38'],
+          ['North Step', '01:25 - 02:03'],
+          ['Grey Cloister', '01:14 - 01:46'],
+          ['Terminal Drift', '01:21 - 02:00'],
+          ['Ash Basin', '01:08 - 01:35'],
+          ['Black Iron', '01:30 - 02:08'],
+          ['Sable Dock', '01:18 - 01:52'],
+          ['White Brake', '01:03 - 01:33'],
+          ['Storm Arch', '01:23 - 02:02']
+        ]
+      };
+
+      const grid = document.getElementById('stage-grid');
+      Object.entries(stageGroups).forEach(([game, stages]) => {
+        stages.forEach(([name, range]) => {
+          const link = document.createElement('a');
+          link.className = 'stage-card';
+          link.href = `/stage.html?game=${encodeURIComponent(game)}&stage=${encodeURIComponent(name)}`;
+          link.innerHTML = `
+            <h3>${name}</h3>
+            <div class="meta">${game}</div>
+            <span class="range">${range}</span>
+          `;
+          grid.appendChild(link);
+        });
+      });
+    </script>
+  </body>
+</html>

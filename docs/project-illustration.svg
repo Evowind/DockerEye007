@@ -1,0 +1,151 @@
+<svg width="1400" height="860" viewBox="0 0 1400 860" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1400" y2="860" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#090C0E"/>
+      <stop offset="1" stop-color="#141B1D"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#121819"/>
+      <stop offset="1" stop-color="#0E1215"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#F4D27A"/>
+      <stop offset="1" stop-color="#C8902D"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-opacity="0.35" flood-color="#000000"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="860" fill="url(#bg)"/>
+
+  <g opacity="0.18">
+    <circle cx="160" cy="120" r="320" fill="#D7AD57"/>
+    <circle cx="1180" cy="700" r="260" fill="#74C4FF"/>
+    <circle cx="1180" cy="150" r="180" fill="#D08CE8"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="60" width="1280" height="740" rx="20" fill="#0D1012" stroke="#2A3033"/>
+  </g>
+
+  <g>
+    <rect x="90" y="90" width="1220" height="90" rx="12" fill="#13191B" stroke="#2D3437"/>
+    <circle cx="155" cy="135" r="26" fill="url(#gold)" opacity="0.9"/>
+    <text x="205" y="126" fill="#F2D27E" font-size="18" font-family="Segoe UI, Arial, sans-serif" letter-spacing="6" font-weight="700">THE-ELITE</text>
+    <text x="205" y="155" fill="#EDF0F1" font-size="34" font-family="Segoe UI, Arial, sans-serif" font-weight="800">DOCKER EYE 007</text>
+    <rect x="1020" y="115" width="190" height="40" rx="8" fill="#171D20" stroke="#3B4247"/>
+    <text x="1040" y="141" fill="#A6ACB0" font-size="15" font-family="Segoe UI, Arial, sans-serif">Email</text>
+    <rect x="1225" y="115" width="52" height="40" rx="8" fill="url(#gold)"/>
+    <text x="1238" y="141" fill="#111111" font-size="16" font-family="Segoe UI, Arial, sans-serif" font-weight="800">Go</text>
+  </g>
+
+  <g>
+    <rect x="110" y="210" width="1180" height="52" rx="10" fill="#181D1F" stroke="#333A3D"/>
+    <g fill="#EDF0F1" font-family="Segoe UI, Arial, sans-serif" font-size="15" font-weight="700">
+      <rect x="132" y="220" width="148" height="32" rx="6" fill="#22292C"/>
+      <text x="175" y="241">Home</text>
+      <rect x="300" y="220" width="164" height="32" rx="6" fill="#22292C"/>
+      <text x="338" y="241">Apex Run</text>
+      <rect x="484" y="220" width="158" height="32" rx="6" fill="#22292C"/>
+      <text x="526" y="241">Nightfall</text>
+      <rect x="662" y="220" width="160" height="32" rx="6" fill="#22292C"/>
+      <text x="711" y="241">Stage Index</text>
+      <rect x="842" y="220" width="155" height="32" rx="6" fill="#22292C"/>
+      <text x="890" y="241">Players</text>
+      <rect x="1017" y="220" width="148" height="32" rx="6" fill="#22292C"/>
+      <text x="1062" y="241">Submit</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="110" y="290" width="260" height="430" rx="14" fill="url(#panel)" stroke="#2A3033"/>
+    <text x="140" y="330" fill="#F3D179" font-size="17" font-family="Segoe UI, Arial, sans-serif" font-weight="800" letter-spacing="3">NAVIGATION</text>
+    <g fill="#EDF0F1" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600">
+      <rect x="136" y="352" width="206" height="42" rx="8" fill="#111315" stroke="#2A3033"/>
+      <text x="168" y="380">★ Leaderboards</text>
+      <rect x="136" y="408" width="206" height="42" rx="8" fill="#111315" stroke="#2A3033"/>
+      <text x="168" y="436">🏆 Apex Run</text>
+      <rect x="136" y="464" width="206" height="42" rx="8" fill="#111315" stroke="#2A3033"/>
+      <text x="168" y="492">▣ Nightfall</text>
+      <rect x="136" y="520" width="206" height="42" rx="8" fill="#111315" stroke="#2A3033"/>
+      <text x="168" y="548">⚑ Stages</text>
+      <rect x="136" y="576" width="206" height="42" rx="8" fill="#111315" stroke="#2A3033"/>
+      <text x="168" y="604">✦ Players</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="400" y="290" width="860" height="430" rx="14" fill="url(#panel)" stroke="#2A3033"/>
+    <rect x="430" y="320" width="800" height="58" rx="10" fill="#13191B" stroke="#2C3438"/>
+    <text x="455" y="356" fill="#F3D179" font-size="22" font-family="Segoe UI, Arial, sans-serif" font-weight="800">CURRENT BOARD</text>
+
+    <g>
+      <rect x="430" y="402" width="180" height="90" rx="12" fill="#0E1113" stroke="#2A3033"/>
+      <text x="454" y="430" fill="#A6ACB0" font-size="12" font-family="Segoe UI, Arial, sans-serif" letter-spacing="3" font-weight="700">LEADER</text>
+      <text x="454" y="467" fill="#F3D179" font-size="28" font-family="Segoe UI, Arial, sans-serif" font-weight="800">Alex</text>
+
+      <rect x="630" y="402" width="180" height="90" rx="12" fill="#0E1113" stroke="#2A3033"/>
+      <text x="655" y="430" fill="#A6ACB0" font-size="12" font-family="Segoe UI, Arial, sans-serif" letter-spacing="3" font-weight="700">FASTEST</text>
+      <text x="655" y="467" fill="#EDF0F1" font-size="27" font-family="Segoe UI, Arial, sans-serif" font-weight="800">00:52.480</text>
+
+      <rect x="830" y="402" width="180" height="90" rx="12" fill="#0E1113" stroke="#2A3033"/>
+      <text x="855" y="430" fill="#A6ACB0" font-size="12" font-family="Segoe UI, Arial, sans-serif" letter-spacing="3" font-weight="700">STAGES</text>
+      <text x="855" y="467" fill="#EDF0F1" font-size="27" font-family="Segoe UI, Arial, sans-serif" font-weight="800">40</text>
+    </g>
+
+    <rect x="430" y="520" width="780" height="160" rx="12" fill="#0E1113" stroke="#2A3033"/>
+    <text x="455" y="550" fill="#F3D179" font-size="18" font-family="Segoe UI, Arial, sans-serif" font-weight="800">STAGE LEADERBOARD</text>
+
+    <g fill="#EDF0F1" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="700">
+      <text x="455" y="577" fill="#A6ACB0">#</text>
+      <text x="490" y="577" fill="#A6ACB0">Player</text>
+      <text x="700" y="577" fill="#A6ACB0">Board</text>
+      <text x="820" y="577" fill="#A6ACB0">Difficulty</text>
+      <text x="940" y="577" fill="#A6ACB0">Time</text>
+      <text x="1060" y="577" fill="#A6ACB0">Points</text>
+
+      <text x="490" y="610" fill="#F3D179">🇫🇷 Alex</text>
+      <text x="700" y="610">Apex Run</text>
+      <text x="820" y="610" fill="#F3D179">Sprint</text>
+      <text x="940" y="610">00:52.480</text>
+      <text x="1060" y="610" fill="#F3D179">100</text>
+
+      <text x="490" y="640" fill="#74C4FF">🇯🇵 Kenji</text>
+      <text x="700" y="640">Nightfall</text>
+      <text x="820" y="640" fill="#D7AD57">Standard</text>
+      <text x="940" y="640">01:12.940</text>
+      <text x="1060" y="640" fill="#F3D179">97</text>
+
+      <text x="490" y="670" fill="#6FD48E">🇺🇸 Nyx</text>
+      <text x="700" y="670">Apex Run</text>
+      <text x="820" y="670" fill="#D7AD57">Sprint</text>
+      <text x="940" y="670">00:56.901</text>
+      <text x="1060" y="670" fill="#F3D179">92</text>
+    </g>
+  </g>
+
+  <g>
+    <rect x="1040" y="420" width="250" height="150" rx="12" fill="#151A1C" stroke="#2A3033"/>
+    <text x="1065" y="448" fill="#F3D179" font-size="16" font-family="Segoe UI, Arial, sans-serif" font-weight="800">SERVICE STACK</text>
+    <g>
+      <rect x="1065" y="468" width="88" height="58" rx="8" fill="#171D20" stroke="#3A4348"/>
+      <text x="1088" y="493" fill="#EDF0F1" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Auth</text>
+      <rect x="1165" y="468" width="88" height="58" rx="8" fill="#171D20" stroke="#3A4348"/>
+      <text x="1181" y="493" fill="#EDF0F1" font-size="13" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Runs</text>
+      <rect x="1065" y="536" width="188" height="18" rx="9" fill="#171D20" stroke="#3A4348"/>
+      <text x="1115" y="550" fill="#6FD48E" font-size="11" font-family="Segoe UI, Arial, sans-serif" font-weight="700">PostgreSQL</text>
+    </g>
+  </g>
+
+  <g>
+    <line x1="270" y1="585" x2="365" y2="585" stroke="#D7AD57" stroke-width="3" stroke-dasharray="8 8"/>
+    <line x1="594" y1="585" x2="710" y2="585" stroke="#74C4FF" stroke-width="3" stroke-dasharray="8 8"/>
+    <line x1="880" y1="585" x2="1000" y2="585" stroke="#D08CE8" stroke-width="3" stroke-dasharray="8 8"/>
+  </g>
+
+  <g>
+    <rect x="110" y="750" width="1180" height="30" rx="10" fill="#121619" stroke="#2A3033"/>
+    <text x="150" y="770" fill="#A6ACB0" font-size="14" font-family="Segoe UI, Arial, sans-serif" font-weight="700">Gateway • Leaderboards • Stage Browser • Player Profiles • Difficulty-based Rankings</text>
+  </g>
+</svg>

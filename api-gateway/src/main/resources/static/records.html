@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Records</title>
+    <link rel="stylesheet" href="css/elite-theme.css" />
+    <style>
+      .board-switcher { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; }
+      .board-switcher button {
+        padding: 8px 12px; border: 1px solid var(--elite-line-strong); background: #111315; color: var(--elite-text);
+        font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+      }
+      .board-switcher button.active { border-color: rgba(215, 173, 87, 0.7); background: #2d2516; color: var(--elite-gold-strong); }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="portal-header">
+        <div class="portal-header-inner">
+          <div class="brand-lockup">
+            <div class="brand-badge" aria-hidden="true"></div>
+            <div>
+              <span class="eyebrow">The-Elite</span>
+              <h1 class="portal-title">Records</h1>
+              <div class="portal-subtitle">Route records, WR watch, and stage splits across both boards</div>
+            </div>
+          </div>
+          <div class="login-panel">
+            <input type="text" placeholder="Email" aria-label="Email" />
+            <input type="password" placeholder="Password" aria-label="Password" />
+            <button type="button">Help / Join</button>
+          </div>
+        </div>
+      </header>
+
+      <nav class="top-tabs" aria-label="Section navigation">
+        <div class="tab-wrap"><a class="tab" href="/index.html">Rankings Home</a></div>
+        <div class="tab-wrap"><a class="tab active" href="/records.html">Apex Run</a></div>
+        <div class="tab-wrap"><a class="tab" href="/leaders.html">Nightfall</a></div>
+        <div class="tab-wrap"><a class="tab" href="/levels.html">Stage Index</a></div>
+        <div class="tab-wrap"><a class="tab" href="/player.html">Players</a></div>
+      </nav>
+
+      <div class="content-layout">
+        <aside class="sidebar">
+          <div class="side-heading">Route Hub</div>
+          <ul class="tree">
+            <li><a class="tree-button" href="/records.html"><span class="icon">★</span> Apex Run Records</a></li>
+            <li><a class="tree-button" href="/levels.html"><span class="icon">▣</span> Stage Index</a></li>
+            <li><a class="tree-button" href="/leaders.html"><span class="icon">⚑</span> Nightfall Standings</a></li>
+            <li><a class="tree-button" href="/player.html"><span class="icon">✦</span> Player Pages</a></li>
+          </ul>
+        </aside>
+
+        <main class="main">
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title">Board records</h2></div>
+            <div class="panel-body">
+              <div class="board-switcher" id="board-switcher">
+                <button type="button" class="active" data-board="Apex Run">Apex Run</button>
+                <button type="button" data-board="Nightfall">Nightfall</button>
+              </div>
+              <p class="intro" id="board-intro">Apex Run is the faster, more aggressive side of the board. It emphasizes short, sharp timings and tighter route variance.</p>
+
+              <div class="quick-grid">
+                <div class="quick-card"><span class="kicker">Current WR</span><span class="value" id="record-wr">00:52.480</span><div class="muted" id="record-wr-note">Harbor Run · Sprint</div></div>
+                <div class="quick-card"><span class="kicker">Pointless</span><span class="value" id="record-pointless">01:18.000</span><div class="muted">Floor threshold</div></div>
+                <div class="quick-card"><span class="kicker">Submissions</span><span class="value">210</span><div class="muted">Across all routes</div></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-header"><h2 class="panel-title" id="records-table-title">Current route leaderboard</h2></div>
+            <div class="panel-body leaderboard-wrap">
+              <table>
+                <thead>
+                  <tr><th style="width:52px;">#</th><th>Player</th><th>Stage</th><th>Difficulty</th><th>Time</th><th>Points</th></tr>
+                </thead>
+                <tbody id="records-body">
+                  <tr><td>1</td><td class="player-name player-gold"><a class="player-link player-gold" href="/player.html?player=Alex">🇫🇷 Alex</a></td><td>Harbor Run</td><td><span class="tag">Sprint</span></td><td>00:52.480</td><td class="points">100</td></tr>
+                  <tr><td>2</td><td class="player-name player-cyan"><a class="player-link player-cyan" href="/player.html?player=Kenji">🇯🇵 Kenji</a></td><td>Harbor Run</td><td><span class="tag">Sprint</span></td><td>00:53.120</td><td class="points">97</td></tr>
+                  <tr><td>3</td><td class="player-name player-green"><a class="player-link player-green" href="/player.html?player=Nyx">🇺🇸 Nyx</a></td><td>Glass Gate</td><td><span class="tag">Standard</span></td><td>01:06.901</td><td class="points">92</td></tr>
+                  <tr><td>4</td><td class="player-name player-red"><a class="player-link player-red" href="/player.html?player=Rune">🇩🇪 Rune</a></td><td>Mercury Lift</td><td><span class="tag">Endurance</span></td><td>01:21.350</td><td class="points">88</td></tr>
+                  <tr><td>5</td><td class="player-name player-magenta"><a class="player-link player-magenta" href="/player.html?player=Mina">🇰🇷 Mina</a></td><td>Drift Line</td><td><span class="tag">Sprint</span></td><td>01:28.410</td><td class="points">84</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+    <script>
+      const boardIntro = {
+        'Apex Run': 'Apex Run is the faster, more aggressive side of the board. It emphasizes short, sharp timings and tighter route variance.',
+        'Nightfall': 'Nightfall rewards consistency at longer speed and control-heavy stages, with more room for technical play and pacing.'
+      };
+      const boardWr = {
+        'Apex Run': { time: '00:52.480', note: 'Harbor Run · Sprint' },
+        'Nightfall': { time: '01:12.940', note: 'Glass Gate · Standard' }
+      };
+      const buttons = document.querySelectorAll('#board-switcher button');
+      const intro = document.getElementById('board-intro');
+      const wr = document.getElementById('record-wr');
+      const wrNote = document.getElementById('record-wr-note');
+      const title = document.getElementById('records-table-title');
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
+          const board = button.dataset.board;
+          intro.textContent = boardIntro[board];
+          wr.textContent = boardWr[board].time;
+          wrNote.textContent = boardWr[board].note;
+          title.textContent = `${board} route leaderboard`;
+        });
+      });
+    </script>
+  </body>
+</html>
