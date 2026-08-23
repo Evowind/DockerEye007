@@ -1,0 +1,40 @@
+# Gradle
+.gradle/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# Java
+*.class
+*.log
+hs_err_pid*
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local runtime / env
+.env
+.env.*
+*.local
+
+# Docker local state
+volumes/
+postgres-data/
+**/.postgres-data/
+
+# Test reports
+test-output/
+
+# Spring boot
+application-local.properties
+
+# Generated docs artifacts if desired
+# docs/*.png
+# docs/*.jpg
